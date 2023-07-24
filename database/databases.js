@@ -2,10 +2,10 @@ const mysql = require('mysql')
 const util = require('util')
 
 const conn = mysql.createConnection({
-    host: "localhost",
-    user: "root",
-    password: "abhi123",
-    database: "identity_reconciliation"
+    host: process.env.DB_HOST,
+    user: process.env.DB_USER,
+    password: process.env.DB_PASSWORD,
+    database: process.env.DB_DATABASE
 })
 
 const query = util.promisify(conn.query).bind(conn)

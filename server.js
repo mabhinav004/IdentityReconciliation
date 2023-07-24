@@ -1,12 +1,14 @@
 const express = require('express')
 const app = express()
 const bodyParser = require('body-parser')
+const dotenv = require('dotenv')
+dotenv.config({path: `.env`})
 const identifyService = require('./services/identify')
 
 app.use(bodyParser.urlencoded({extended: false}));
 app.use(bodyParser.json());
 
-const port = 8000
+const port = process.env.HOST || 8000
 
 app.post("/identify", async (req, res) => {
 
@@ -26,8 +28,7 @@ app.post("/identify", async (req, res) => {
 
     const responseData = await identifyService.getIdentifyData({requestData})
 
-    res.status(responseData.statusCode)
-    res.send(responseData.data)
+    res.status(responseData.statusCode).send(responseData.data)
 })
 
 app.listen(port, () => {
